@@ -14,7 +14,9 @@
 //! to record whether or not the value is negative.
 class BigInt {
 private:
-  // TODO: add fields
+  std::vector<uint64_t> magnitude;
+  bool sign; 
+
 
 public:
   //! Default constructor.
@@ -185,6 +187,11 @@ public:
 
 private:
   // TODO: add helper functions
+  BigInt simple_add(const BigInt &a, const BigInt &b) const;
+  BigInt mixed_add(const BigInt &a, const BigInt &b) const;
+  static std::vector<uint64_t> add_magnitudes(const BigInt &lhs, const BigInt &rhs);
+  static std::vector<uint64_t> subtract_magnitudes(const BigInt &lhs, const BigInt &rhs);
+  static int compare_magnitudes(const BigInt &lhs, const BigInt &rhs);
 };
 
 #endif // BIGINT_H

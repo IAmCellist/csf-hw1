@@ -60,6 +60,7 @@ void test_to_hex_1(TestObjs *objs);
 void test_to_hex_2(TestObjs *objs);
 void test_to_dec_1(TestObjs *objs);
 void test_to_dec_2(TestObjs *objs);
+void test_negation(TestObjs *objs);
 // TODO: declare additional test functions
 
 int main(int argc, char **argv) {
@@ -96,6 +97,7 @@ int main(int argc, char **argv) {
   TEST(test_to_hex_2);
   TEST(test_to_dec_1);
   TEST(test_to_dec_2);
+  TEST(test_negation);
   // TODO: add calls to TEST for additional test functions
 
   TEST_FINI();
@@ -583,6 +585,34 @@ void test_to_dec_2(TestObjs *) {
     std::string result = val.to_dec();
     ASSERT("703527900324720116021349050368162523567079645895" == result);
   }
+}
+
+void test_negation(TestObjs *objs) {
+  BigInt negative_two_pow = -objs->two_pow_64;
+  ASSERT(negative_two_pow.to_hex() == "-10000000000000000");
+
+  BigInt negative_u64_max = -objs->u64_max;
+  ASSERT(negative_u64_max.to_hex() == "-ffffffffffffffff");
+
+  BigInt val({0xd8b5422df2c7e5d4UL, 0x2186595636ed41d7UL, 0xcf498dc4c634eb41UL, 0xa6579a3f9d2aab0cUL, 0xb5cbefaf0e63a6e3UL, 0xf419b0aadf4d14f1UL, 0xcec650d523acc64eUL, 0x14318cf757a58UL}, true);
+
+  BigInt positive_val = -val;
+
+  ASSERT(positive_val.to_hex() == "14318cf757a58cec650d523acc64ef419b0aadf4d14f1b5cbefaf0e63a6e3a6579a3f9d2aab0ccf498dc4c634eb412186595636ed41d7d8b5422df2c7e5d4");
+
+  BigInt negative_zero = -objs->zero;
+
+  ASSERT(negative_zero.to_hex() == "0");
+
+  BigInt big_zero({0UL, 0UL, 0UL, 0UL, 0UL, 0UL, 0UL, 0UL});
+
+  std::cout << big_zero.to_hex() << "\n";
+  ASSERT(big_zero.to_hex() == "0");
+
+
+    BigInt val_2({0xd8b5422df2c7e5d4UL, 0x2186595636ed41d7UL, 0xcf498dc4c634eb41UL, 0xa6579a3f9d2aab0cUL, 0xb5cbefaf0e63a6e3UL, 0xf419b0aadf4d14f1UL, 0xcec650d523acc64eUL, 0UL}, true);
+
+    ASSERT(val_2.to_hex() == "-cec650d523acc64ef419b0aadf4d14f1b5cbefaf0e63a6e3a6579a3f9d2aab0ccf498dc4c634eb412186595636ed41d7d8b5422df2c7e5d4");
 }
 
 // TODO: implement additional test functions

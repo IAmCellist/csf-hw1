@@ -153,7 +153,7 @@ public:
 
   //! Compare two BigInt values, returning
   //!   - negative if lhs < rhs
-  //!   - 0 if lhs < rhs
+  //!   - 0 if lhs = rhs
   //!   - positive if lhs > rhs
   //!
   //! @param rhs the right-hand side BigInt value (the left hand value
@@ -187,11 +187,13 @@ public:
 
 private:
   // TODO: add helper functions
+  bool is_zero() const;
   BigInt simple_add(const BigInt &a, const BigInt &b) const;
   BigInt mixed_add(const BigInt &a, const BigInt &b) const;
   static std::vector<uint64_t> add_magnitudes(const BigInt &lhs, const BigInt &rhs);
   static std::vector<uint64_t> subtract_magnitudes(const BigInt &lhs, const BigInt &rhs);
   static int compare_magnitudes(const BigInt &lhs, const BigInt &rhs);
+  BigInt div_by_2();
 };
 
 #endif // BIGINT_H

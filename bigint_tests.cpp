@@ -61,6 +61,7 @@ void test_to_hex_2(TestObjs *objs);
 void test_to_dec_1(TestObjs *objs);
 void test_to_dec_2(TestObjs *objs);
 void test_negation(TestObjs *objs);
+void test_assign(TestObjs *objs);
 // TODO: declare additional test functions
 
 int main(int argc, char **argv) {
@@ -98,6 +99,7 @@ int main(int argc, char **argv) {
   TEST(test_to_dec_1);
   TEST(test_to_dec_2);
   TEST(test_negation);
+  TEST(test_assign);
   // TODO: add calls to TEST for additional test functions
 
   TEST_FINI();
@@ -606,13 +608,18 @@ void test_negation(TestObjs *objs) {
 
   BigInt big_zero({0UL, 0UL, 0UL, 0UL, 0UL, 0UL, 0UL, 0UL});
 
-  std::cout << big_zero.to_hex() << "\n";
+  // std::cout << big_zero.to_hex() << "\n";
   ASSERT(big_zero.to_hex() == "0");
 
 
     BigInt val_2({0xd8b5422df2c7e5d4UL, 0x2186595636ed41d7UL, 0xcf498dc4c634eb41UL, 0xa6579a3f9d2aab0cUL, 0xb5cbefaf0e63a6e3UL, 0xf419b0aadf4d14f1UL, 0xcec650d523acc64eUL, 0UL}, true);
 
     ASSERT(val_2.to_hex() == "-cec650d523acc64ef419b0aadf4d14f1b5cbefaf0e63a6e3a6579a3f9d2aab0ccf498dc4c634eb412186595636ed41d7d8b5422df2c7e5d4");
+}
+
+void test_assign(TestObjs *objs) {
+  BigInt result1 = objs->zero;
+  ASSERT(result1.get_bit_vector() == objs->zero.get_bit_vector() && result1.is_negative() == objs->zero.is_negative());
 }
 
 // TODO: implement additional test functions
